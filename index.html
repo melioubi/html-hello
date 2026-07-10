@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgentHub | Panel de Administracion</title>
+    <script>
+      tailwind = { config: { darkMode: "class" } };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="h-full bg-slate-100 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-100">
+    <div class="min-h-full md:flex">
+      <aside
+        id="sidebar"
+        class="fixed inset-y-0 left-0 z-40 w-72 -translate-x-full border-r border-slate-200 bg-white/95 p-6 shadow-xl backdrop-blur transition-transform duration-300 dark:border-slate-800 dark:bg-slate-900/95 md:static md:translate-x-0 md:shadow-none"
+      >
+        <div class="mb-8">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-teal-600 dark:text-teal-400">AgentHub</p>
+          <h1 class="mt-2 text-2xl [font-family:'Fraunces',serif]">Panel de Administracion</h1>
+        </div>
+
+        <nav aria-label="Navegacion principal" class="space-y-2" id="sidebarNav">
+          <a href="#dashboard" data-nav-link="dashboard" class="flex items-center rounded-xl px-4 py-3 font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100">Dashboard</a>
+          <a href="#usuarios" data-nav-link="usuarios" class="flex items-center rounded-xl px-4 py-3 font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100">Gestion de usuarios</a>
+          <a href="#agentes" data-nav-link="agentes" class="flex items-center rounded-xl px-4 py-3 font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100">Gestion de agentes</a>
+          <a href="#skills" data-nav-link="skills" class="flex items-center rounded-xl px-4 py-3 font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100">Skills</a>
+          <a href="#contratos" data-nav-link="contratos" class="flex items-center rounded-xl px-4 py-3 font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100">Contrataciones</a>
+          <a href="#errores" data-nav-link="errores" class="flex items-center rounded-xl px-4 py-3 font-semibold text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-slate-100">Log de errores</a>
+        </nav>
+      </aside>
+
+      <div class="flex min-h-full flex-1 flex-col md:ml-0">
+        <header class="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-900/90">
+          <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-3">
+              <button id="menuToggle" class="rounded-lg border border-slate-300 px-3 py-2 text-slate-700 dark:border-slate-700 dark:text-slate-200 md:hidden" aria-label="Abrir menu">Menu</button>
+              <p id="activeSectionTitle" class="text-lg font-bold [font-family:'Fraunces',serif]">Dashboard</p>
+            </div>
+
+            <button id="themeToggle" class="flex items-center gap-3 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100" aria-label="Cambiar tema">
+              <span id="themeIcon">🌞</span>
+              <span id="themeLabel">Modo claro</span>
+            </button>
+          </div>
+        </header>
+
+        <main class="mx-auto w-full max-w-7xl space-y-8 px-4 py-8 sm:px-6 lg:px-8">
+          <section id="dashboard" data-section-title="Dashboard" class="scroll-mt-28 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="mb-6 flex items-end justify-between gap-3">
+              <div>
+                <h2 class="text-2xl [font-family:'Fraunces',serif]">Dashboard</h2>
+                <p class="text-sm text-slate-600 dark:text-slate-300">Resumen operativo y financiero del mes actual.</p>
+              </div>
+            </div>
+
+            <div id="metricGrid" class="grid gap-4 sm:grid-cols-2"></div>
+
+            <div class="mt-6 rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 p-8 text-center dark:border-slate-700 dark:bg-slate-800/50">
+              <p class="text-lg font-semibold">Actividad semanal</p>
+              <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">Placeholder de grafico (sin integracion de datos en esta fase).</p>
+            </div>
+          </section>
+
+          <section id="usuarios" data-section-title="Gestion de usuarios" class="scroll-mt-28 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="mb-6">
+              <h2 class="text-2xl [font-family:'Fraunces',serif]">Gestion de usuarios</h2>
+              <p class="text-sm text-slate-600 dark:text-slate-300">Registro de usuarios del panel interno de AgentHub.</p>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="min-w-full text-left text-sm">
+                <thead class="border-b border-slate-200 text-xs uppercase tracking-wide text-slate-600 dark:border-slate-700 dark:text-slate-300">
+                  <tr>
+                    <th class="px-4 py-3">Nombre</th>
+                    <th class="px-4 py-3">Email</th>
+                    <th class="px-4 py-3">Plan</th>
+                    <th class="px-4 py-3">Estado</th>
+                    <th class="px-4 py-3 text-right">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="usersBody" class="divide-y divide-slate-100 dark:divide-slate-800"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="agentes" data-section-title="Gestion de agentes" class="scroll-mt-28 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="mb-6">
+              <h2 class="text-2xl [font-family:'Fraunces',serif]">Gestion de agentes</h2>
+              <p class="text-sm text-slate-600 dark:text-slate-300">Control de estado, skills y configuracion de prompts.</p>
+            </div>
+
+            <div id="agentsList" class="space-y-4"></div>
+          </section>
+
+          <section id="skills" data-section-title="Skills" class="scroll-mt-28 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="mb-5 rounded-xl border border-teal-200 bg-teal-50 p-4 text-sm text-teal-900 dark:border-teal-900 dark:bg-teal-900/20 dark:text-teal-100">
+              Una skill en AgentHub es una capacidad modular (por ejemplo: navegacion web, OCR o gestion de calendario) que se adjunta a un agente para ampliar su alcance funcional.
+            </div>
+
+            <div class="mb-6">
+              <h2 class="text-2xl [font-family:'Fraunces',serif]">Catalogo de skills</h2>
+            </div>
+
+            <div id="skillsGrid" class="grid gap-4 md:grid-cols-2"></div>
+          </section>
+
+          <section id="contratos" data-section-title="Contrataciones" class="scroll-mt-28 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="mb-6">
+              <h2 class="text-2xl [font-family:'Fraunces',serif]">Contrataciones de agentes</h2>
+              <p class="text-sm text-slate-600 dark:text-slate-300">Historial de alquileres activos y finalizados.</p>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="min-w-full text-left text-sm">
+                <thead class="border-b border-slate-200 text-xs uppercase tracking-wide text-slate-600 dark:border-slate-700 dark:text-slate-300">
+                  <tr>
+                    <th class="px-4 py-3">Cliente</th>
+                    <th class="px-4 py-3">Agente</th>
+                    <th class="px-4 py-3">Skills</th>
+                    <th class="px-4 py-3">Fechas</th>
+                    <th class="px-4 py-3">Importe</th>
+                    <th class="px-4 py-3 text-right">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="contractsBody" class="divide-y divide-slate-100 dark:divide-slate-800"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="errores" data-section-title="Log de errores" class="scroll-mt-28 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <div class="mb-6">
+              <h2 class="text-2xl [font-family:'Fraunces',serif]">Log de errores</h2>
+              <p class="text-sm text-slate-600 dark:text-slate-300">Seguimiento de incidencias de ejecucion por agente.</p>
+            </div>
+
+            <div id="errorsList" class="space-y-3"></div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div id="modalRoot" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+      <div data-modal-backdrop class="absolute inset-0 bg-slate-950/50"></div>
+      <div class="relative z-10 max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-slate-200 bg-white p-6 shadow-2xl dark:border-slate-700 dark:bg-slate-900">
+        <div class="mb-4 flex items-center justify-between gap-4">
+          <h3 id="modalTitle" class="text-xl [font-family:'Fraunces',serif]"></h3>
+          <button data-close-modal class="rounded-lg border border-slate-300 px-3 py-1 text-sm dark:border-slate-700">Cerrar</button>
+        </div>
+        <div id="modalContent" class="space-y-3 text-sm text-slate-700 dark:text-slate-200"></div>
+      </div>
+    </div>
+
+    <script>
+      const metrics = [
+        { icon: "💰", label: "Ingresos totales (mes)", value: "$128,400", accent: "bg-emerald-100 text-emerald-900 dark:bg-emerald-900/40 dark:text-emerald-100" },
+        { icon: "🎟️", label: "Perdidas por descuentos", value: "$12,750", accent: "bg-amber-100 text-amber-900 dark:bg-amber-900/40 dark:text-amber-100" },
+        { icon: "🤖", label: "Agentes activos", value: "142", accent: "bg-sky-100 text-sky-900 dark:bg-sky-900/40 dark:text-sky-100" },
+        { icon: "⚠️", label: "Agentes fallando", value: "9", accent: "bg-rose-100 text-rose-900 dark:bg-rose-900/40 dark:text-rose-100" }
+      ];
+
+      const users = [
+        { id: "u1", name: "Marta Delgado", email: "marta@novadata.com", plan: "Enterprise", status: "Activo", company: "NovaData", role: "Ops Lead", joined: "2024-03-18" },
+        { id: "u2", name: "Diego Ramos", email: "diego@segurix.io", plan: "Pro", status: "Activo", company: "Segurix", role: "CTO", joined: "2024-07-10" },
+        { id: "u3", name: "Lucia Peña", email: "lucia@medilink.ai", plan: "Pro", status: "Pendiente", company: "MediLink", role: "Product Manager", joined: "2025-01-22" },
+        { id: "u4", name: "Cesar Vidal", email: "cesar@cargomesh.com", plan: "Starter", status: "Suspendido", company: "CargoMesh", role: "Administrador", joined: "2023-12-02" },
+        { id: "u5", name: "Aitana Ruiz", email: "aitana@fincloud.com", plan: "Enterprise", status: "Activo", company: "FinCloud", role: "COO", joined: "2025-05-14" }
+      ];
+
+      const agents = [
+        {
+          id: "a1",
+          name: "Atlas Support",
+          owner: "NovaData",
+          status: "Activo",
+          skills: ["Busqueda web", "Resumen documental", "Email routing"],
+          prompt: "Eres Atlas Support. Prioriza la resolucion en primer contacto y responde con tono claro, conciso y verificable."
+        },
+        {
+          id: "a2",
+          name: "Helix Finance",
+          owner: "FinCloud",
+          status: "Fallando",
+          skills: ["Analisis CSV", "Deteccion de anomalas", "Explicaciones ejecutivas"],
+          prompt: "Eres Helix Finance. Revisa desviaciones financieras y reporta hallazgos con impacto y nivel de riesgo."
+        },
+        {
+          id: "a3",
+          name: "Nexus Scheduler",
+          owner: "MediLink",
+          status: "Activo",
+          skills: ["Calendario", "Recordatorios", "Sincronizacion CRM"],
+          prompt: "Eres Nexus Scheduler. Optimiza agendas y evita conflictos de horario entre equipos y clientes."
+        },
+        {
+          id: "a4",
+          name: "Forge Ops",
+          owner: "CargoMesh",
+          status: "Inactivo",
+          skills: ["OCR", "Clasificacion de tickets", "Generacion de reportes"],
+          prompt: "Eres Forge Ops. Clasifica incidencias logisticas y sugiere plan de accion segun SLA definido."
+        }
+      ];
+
+      const skills = [
+        { id: "s1", name: "Busqueda web", description: "Navega y sintetiza fuentes externas confiables.", enabledIn: 53, useCases: "Benchmark, investigacion, monitoreo competitivo." },
+        { id: "s2", name: "OCR", description: "Extrae texto de PDFs e imagenes operativas.", enabledIn: 28, useCases: "Facturas, contratos, documentos escaneados." },
+        { id: "s3", name: "Calendario", description: "Gestiona disponibilidad y reuniones automaticamente.", enabledIn: 41, useCases: "Agenda comercial, soporte, onboarding." },
+        { id: "s4", name: "Analisis CSV", description: "Procesa datos tabulares y detecta patrones.", enabledIn: 35, useCases: "Reporting financiero y operativo." }
+      ];
+
+      const contracts = [
+        {
+          id: "c1",
+          client: "NovaData",
+          agent: "Atlas Support",
+          skills: ["Busqueda web", "Resumen documental"],
+          start: "2026-01-01",
+          end: "2026-12-31",
+          total: "$24,000",
+          breakdown: [
+            { skill: "Busqueda web", price: "$900/mes" },
+            { skill: "Resumen documental", price: "$700/mes" }
+          ]
+        },
+        {
+          id: "c2",
+          client: "FinCloud",
+          agent: "Helix Finance",
+          skills: ["Analisis CSV", "Deteccion de anomalas"],
+          start: "2025-09-15",
+          end: "2026-09-14",
+          total: "$31,200",
+          breakdown: [
+            { skill: "Analisis CSV", price: "$1,100/mes" },
+            { skill: "Deteccion de anomalas", price: "$1,500/mes" }
+          ]
+        },
+        {
+          id: "c3",
+          client: "MediLink",
+          agent: "Nexus Scheduler",
+          skills: ["Calendario", "Sincronizacion CRM"],
+          start: "2025-11-01",
+          end: "2026-10-31",
+          total: "$26,400",
+          breakdown: [
+            { skill: "Calendario", price: "$950/mes" },
+            { skill: "Sincronizacion CRM", price: "$1,250/mes" }
+          ]
+        },
+        {
+          id: "c4",
+          client: "CargoMesh",
+          agent: "Forge Ops",
+          skills: ["OCR", "Generacion de reportes"],
+          start: "2024-05-10",
+          end: "2025-05-09",
+          total: "$18,600",
+          breakdown: [
+            { skill: "OCR", price: "$600/mes" },
+            { skill: "Generacion de reportes", price: "$950/mes" }
+          ]
+        }
+      ];
+
+      const errors = [
+        { id: "e1", timestamp: "2026-07-08 09:11", agent: "Helix Finance", type: "Timeout", severity: "warning", summary: "Tiempo de respuesta excedido al procesar lote financiero.", trace: "TimeoutError: upstream analytics provider > 30s." },
+        { id: "e2", timestamp: "2026-07-08 11:36", agent: "Atlas Support", type: "Integracion", severity: "critical", summary: "Fallo de autenticacion en conector CRM.", trace: "AuthException: invalid refresh token in crm-adapter." },
+        { id: "e3", timestamp: "2026-07-08 13:02", agent: "Nexus Scheduler", type: "Validacion", severity: "warning", summary: "Formato de fecha invalido en evento entrante.", trace: "ValidationError: expected ISO date, received locale string." },
+        { id: "e4", timestamp: "2026-07-08 15:24", agent: "Forge Ops", type: "OCR", severity: "info", summary: "Documento con baja legibilidad, precision reducida.", trace: "OCRWarning: confidence below 0.62 for 4 pages." },
+        { id: "e5", timestamp: "2026-07-09 08:47", agent: "Helix Finance", type: "Dependencia", severity: "critical", summary: "Servicio de scoring externo no disponible.", trace: "ServiceUnavailable: risk-score-api returned 503." },
+        { id: "e6", timestamp: "2026-07-09 10:15", agent: "Atlas Support", type: "Memoria", severity: "warning", summary: "Uso de contexto superior al umbral configurado.", trace: "ContextWindowExceeded: attempted 14k tokens with 12k limit." }
+      ];
+
+      const badgeClasses = {
+        Activo: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-100",
+        Pendiente: "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-100",
+        Suspendido: "bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-100",
+        Inactivo: "bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-100",
+        Fallando: "bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-100",
+        warning: "bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-100",
+        critical: "bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-100",
+        info: "bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-100"
+      };
+
+      const metricGrid = document.getElementById("metricGrid");
+      const usersBody = document.getElementById("usersBody");
+      const agentsList = document.getElementById("agentsList");
+      const skillsGrid = document.getElementById("skillsGrid");
+      const contractsBody = document.getElementById("contractsBody");
+      const errorsList = document.getElementById("errorsList");
+
+      function renderMetrics() {
+        metricGrid.innerHTML = metrics
+          .map(
+            (m) => `
+            <article class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+              <div class="mb-4 inline-flex rounded-xl px-3 py-2 text-xl ${m.accent}">${m.icon}</div>
+              <p class="text-sm text-slate-600 dark:text-slate-300">${m.label}</p>
+              <p class="mt-2 text-3xl font-extrabold">${m.value}</p>
+            </article>
+          `
+          )
+          .join("");
+      }
+
+      function dropdownMenu(id, section, itemId) {
+        return `
+          <div class="relative inline-block" data-dropdown-root>
+            <button class="rounded-lg border border-slate-300 px-2 py-1 text-lg leading-none dark:border-slate-700" data-dropdown-trigger="${id}" aria-label="Abrir acciones">⋮</button>
+            <div id="${id}" class="absolute right-0 z-20 mt-2 hidden min-w-36 rounded-xl border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-800">
+              <button class="w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-slate-700" data-action="view-detail" data-section="${section}" data-id="${itemId}">Ver detalle</button>
+              <button class="w-full rounded-lg px-3 py-2 text-left text-sm text-rose-700 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-900/30" data-action="delete-item" data-section="${section}" data-id="${itemId}">Eliminar</button>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderUsers() {
+        usersBody.innerHTML = users
+          .map(
+            (u) => `
+            <tr>
+              <td class="px-4 py-3 font-semibold">${u.name}</td>
+              <td class="px-4 py-3">${u.email}</td>
+              <td class="px-4 py-3">${u.plan}</td>
+              <td class="px-4 py-3">
+                <span class="rounded-full px-2.5 py-1 text-xs font-semibold ${badgeClasses[u.status] || "bg-slate-200 text-slate-700"}">${u.status}</span>
+              </td>
+              <td class="px-4 py-3 text-right">${dropdownMenu(`dd-user-${u.id}`, "users", u.id)}</td>
+            </tr>
+          `
+          )
+          .join("");
+      }
+
+      function renderAgents() {
+        agentsList.innerHTML = agents
+          .map(
+            (a) => `
+            <article class="rounded-xl border border-slate-200 p-4 dark:border-slate-700">
+              <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <h3 class="text-lg font-bold">${a.name}</h3>
+                  <p class="text-sm text-slate-600 dark:text-slate-300">Propietario: ${a.owner}</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="rounded-full px-2.5 py-1 text-xs font-semibold ${badgeClasses[a.status] || "bg-slate-200 text-slate-700"}">${a.status}</span>
+                  <div class="relative inline-block" data-dropdown-root>
+                    <button class="rounded-lg border border-slate-300 px-2 py-1 text-lg leading-none dark:border-slate-700" data-dropdown-trigger="dd-agent-${a.id}" aria-label="Abrir acciones">⋮</button>
+                    <div id="dd-agent-${a.id}" class="absolute right-0 z-20 mt-2 hidden min-w-40 rounded-xl border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-800">
+                      <button class="w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-slate-700" data-action="configure-agent" data-id="${a.id}">Configurar</button>
+                      <button class="w-full rounded-lg px-3 py-2 text-left text-sm text-rose-700 hover:bg-rose-50 dark:text-rose-300 dark:hover:bg-rose-900/30" data-action="delete-item" data-section="agents" data-id="${a.id}">Eliminar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-3">
+                <button class="rounded-lg border border-slate-300 px-3 py-1 text-sm font-semibold dark:border-slate-700" data-collapsible-trigger="skills-${a.id}">Mostrar skills</button>
+                <ul id="skills-${a.id}" class="mt-3 max-h-0 overflow-hidden rounded-lg bg-slate-50 px-4 transition-all duration-300 dark:bg-slate-800/60">
+                  ${a.skills.map((s) => `<li class="py-2 text-sm">• ${s}</li>`).join("")}
+                </ul>
+              </div>
+            </article>
+          `
+          )
+          .join("");
+      }
+
+      function renderSkills() {
+        skillsGrid.innerHTML = skills
+          .map(
+            (s) => `
+            <article class="rounded-xl border border-slate-200 p-4 shadow-sm dark:border-slate-700">
+              <div class="mb-3 flex items-start justify-between gap-3">
+                <div>
+                  <h3 class="text-lg font-bold">${s.name}</h3>
+                  <p class="text-sm text-slate-600 dark:text-slate-300">${s.description}</p>
+                </div>
+                ${dropdownMenu(`dd-skill-${s.id}`, "skills", s.id)}
+              </div>
+              <p class="text-sm"><span class="font-semibold">Agentes habilitados:</span> ${s.enabledIn}</p>
+            </article>
+          `
+          )
+          .join("");
+      }
+
+      function renderContracts() {
+        contractsBody.innerHTML = contracts
+          .map(
+            (c) => `
+            <tr>
+              <td class="px-4 py-3 font-semibold">${c.client}</td>
+              <td class="px-4 py-3">${c.agent}</td>
+              <td class="px-4 py-3">${c.skills.join(", ")}</td>
+              <td class="px-4 py-3">${c.start} a ${c.end}</td>
+              <td class="px-4 py-3">${c.total}</td>
+              <td class="px-4 py-3 text-right">${dropdownMenu(`dd-contract-${c.id}`, "contracts", c.id)}</td>
+            </tr>
+          `
+          )
+          .join("");
+      }
+
+      function renderErrors() {
+        errorsList.innerHTML = errors
+          .map(
+            (e) => `
+            <article class="rounded-xl border border-slate-200 p-4 dark:border-slate-700">
+              <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p class="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">${e.timestamp}</p>
+                  <p class="mt-1 font-semibold">${e.agent}</p>
+                  <p class="text-sm text-slate-600 dark:text-slate-300">${e.summary}</p>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="rounded-full px-2.5 py-1 text-xs font-semibold ${badgeClasses[e.severity]}">${e.type}</span>
+                  <div class="relative inline-block" data-dropdown-root>
+                    <button class="rounded-lg border border-slate-300 px-2 py-1 text-lg leading-none dark:border-slate-700" data-dropdown-trigger="dd-error-${e.id}" aria-label="Abrir acciones">⋮</button>
+                    <div id="dd-error-${e.id}" class="absolute right-0 z-20 mt-2 hidden min-w-40 rounded-xl border border-slate-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-800">
+                      <button class="w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-slate-700" data-action="view-detail" data-section="errors" data-id="${e.id}">Ver detalle</button>
+                      <button class="w-full rounded-lg px-3 py-2 text-left text-sm hover:bg-slate-100 dark:hover:bg-slate-700" data-action="mark-resolved" data-id="${e.id}">Marcar como resuelto</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          `
+          )
+          .join("");
+      }
+
+      const modalRoot = document.getElementById("modalRoot");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalContent = document.getElementById("modalContent");
+
+      function openModal(title, bodyHtml) {
+        modalTitle.textContent = title;
+        modalContent.innerHTML = bodyHtml;
+        modalRoot.classList.remove("hidden");
+        modalRoot.classList.add("flex");
+      }
+
+      function closeModal() {
+        modalRoot.classList.add("hidden");
+        modalRoot.classList.remove("flex");
+      }
+
+      function openDetail(section, id) {
+        if (section === "users") {
+          const u = users.find((x) => x.id === id);
+          if (!u) return;
+          openModal(
+            `Detalle de usuario: ${u.name}`,
+            `<p><strong>Email:</strong> ${u.email}</p>
+             <p><strong>Empresa:</strong> ${u.company}</p>
+             <p><strong>Rol:</strong> ${u.role}</p>
+             <p><strong>Plan:</strong> ${u.plan}</p>
+             <p><strong>Estado:</strong> ${u.status}</p>
+             <p><strong>Alta:</strong> ${u.joined}</p>`
+          );
+        }
+
+        if (section === "skills") {
+          const s = skills.find((x) => x.id === id);
+          if (!s) return;
+          openModal(
+            `Detalle de skill: ${s.name}`,
+            `<p><strong>Descripcion:</strong> ${s.description}</p>
+             <p><strong>Casos de uso:</strong> ${s.useCases}</p>
+             <p><strong>Agentes habilitados:</strong> ${s.enabledIn}</p>`
+          );
+        }
+
+        if (section === "contracts") {
+          const c = contracts.find((x) => x.id === id);
+          if (!c) return;
+          openModal(
+            `Detalle de contrato: ${c.client}`,
+            `<p><strong>Agente:</strong> ${c.agent}</p>
+             <p><strong>Periodo:</strong> ${c.start} a ${c.end}</p>
+             <p><strong>Total pagado:</strong> ${c.total}</p>
+             <div class="mt-3">
+               <p class="mb-2 font-semibold">Desglose por skill:</p>
+               <ul class="list-disc space-y-1 pl-5">
+                 ${c.breakdown.map((item) => `<li>${item.skill}: ${item.price}</li>`).join("")}
+               </ul>
+             </div>`
+          );
+        }
+
+        if (section === "errors") {
+          const e = errors.find((x) => x.id === id);
+          if (!e) return;
+          openModal(
+            `Error ${e.type} en ${e.agent}`,
+            `<p><strong>Timestamp:</strong> ${e.timestamp}</p>
+             <p><strong>Resumen:</strong> ${e.summary}</p>
+             <p><strong>Traza:</strong></p>
+             <pre class="overflow-x-auto rounded-lg bg-slate-100 p-3 text-xs dark:bg-slate-800">${e.trace}</pre>`
+          );
+        }
+      }
+
+      function openAgentConfig(id) {
+        const agent = agents.find((x) => x.id === id);
+        if (!agent) return;
+        openModal(
+          `Configurar ${agent.name}`,
+          `<p class="mb-2">Prompt de sistema editable:</p>
+           <textarea class="min-h-40 w-full rounded-xl border border-slate-300 bg-white p-3 text-sm dark:border-slate-700 dark:bg-slate-800">${agent.prompt}</textarea>`
+        );
+      }
+
+      let openDropdownId = null;
+
+      function closeDropdowns() {
+        document.querySelectorAll("[id^='dd-']").forEach((menu) => menu.classList.add("hidden"));
+        openDropdownId = null;
+      }
+
+      function toggleDropdown(id) {
+        if (openDropdownId && openDropdownId !== id) {
+          const current = document.getElementById(openDropdownId);
+          if (current) current.classList.add("hidden");
+        }
+
+        const menu = document.getElementById(id);
+        if (!menu) return;
+
+        const isHidden = menu.classList.contains("hidden");
+        closeDropdowns();
+
+        if (isHidden) {
+          menu.classList.remove("hidden");
+          openDropdownId = id;
+        }
+      }
+
+      document.addEventListener("click", (event) => {
+        const trigger = event.target.closest("[data-dropdown-trigger]");
+        if (trigger) {
+          event.stopPropagation();
+          toggleDropdown(trigger.dataset.dropdownTrigger);
+          return;
+        }
+
+        const insideDropdown = event.target.closest("[data-dropdown-root]");
+        if (!insideDropdown) {
+          closeDropdowns();
+        }
+
+        const actionButton = event.target.closest("[data-action]");
+        if (!actionButton) return;
+
+        const action = actionButton.dataset.action;
+        const section = actionButton.dataset.section;
+        const id = actionButton.dataset.id;
+
+        closeDropdowns();
+
+        if (action === "view-detail") {
+          openDetail(section, id);
+          return;
+        }
+
+        if (action === "configure-agent") {
+          openAgentConfig(id);
+          return;
+        }
+
+        if (action === "mark-resolved") {
+          openModal("Estado actualizado", "<p>El error se ha marcado como resuelto (simulacion local).</p>");
+          return;
+        }
+
+        if (action === "delete-item") {
+          openModal("Accion registrada", `<p>Solicitud de eliminacion para <strong>${section}</strong> (id: ${id}) registrada en modo prototipo.</p>`);
+        }
+      });
+
+      document.addEventListener("click", (event) => {
+        const closeButton = event.target.closest("[data-close-modal]");
+        const backdrop = event.target.matches("[data-modal-backdrop]");
+
+        if (closeButton || backdrop) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener("click", (event) => {
+        const toggle = event.target.closest("[data-collapsible-trigger]");
+        if (!toggle) return;
+
+        const targetId = toggle.dataset.collapsibleTrigger;
+        const panel = document.getElementById(targetId);
+        if (!panel) return;
+
+        const expanded = panel.classList.contains("max-h-40");
+        if (expanded) {
+          panel.classList.remove("max-h-40", "py-2");
+          panel.classList.add("max-h-0");
+          toggle.textContent = "Mostrar skills";
+        } else {
+          panel.classList.remove("max-h-0");
+          panel.classList.add("max-h-40", "py-2");
+          toggle.textContent = "Ocultar skills";
+        }
+      });
+
+      const htmlRoot = document.documentElement;
+      const themeToggle = document.getElementById("themeToggle");
+      const themeLabel = document.getElementById("themeLabel");
+      const themeIcon = document.getElementById("themeIcon");
+
+      function applyTheme(theme) {
+        const isDark = theme === "dark";
+        htmlRoot.classList.toggle("dark", isDark);
+        themeLabel.textContent = isDark ? "Modo oscuro" : "Modo claro";
+        themeIcon.textContent = isDark ? "🌙" : "🌞";
+      }
+
+      const storedTheme = localStorage.getItem("agenthub-theme") || "light";
+      applyTheme(storedTheme);
+
+      themeToggle.addEventListener("click", () => {
+        const next = htmlRoot.classList.contains("dark") ? "light" : "dark";
+        localStorage.setItem("agenthub-theme", next);
+        applyTheme(next);
+      });
+
+      const menuToggle = document.getElementById("menuToggle");
+      const sidebar = document.getElementById("sidebar");
+
+      menuToggle.addEventListener("click", () => {
+        sidebar.classList.toggle("-translate-x-full");
+      });
+
+      document.addEventListener("click", (event) => {
+        const clickedSidebar = event.target.closest("#sidebar");
+        const clickedMenuButton = event.target.closest("#menuToggle");
+        if (!clickedSidebar && !clickedMenuButton && window.innerWidth < 768) {
+          sidebar.classList.add("-translate-x-full");
+        }
+      });
+
+      const sectionTitle = document.getElementById("activeSectionTitle");
+      const navLinks = [...document.querySelectorAll("[data-nav-link]")];
+      const sections = [...document.querySelectorAll("main section")];
+
+      function setActiveNav(id, title) {
+        navLinks.forEach((link) => {
+          const active = link.dataset.navLink === id;
+          link.classList.toggle("bg-slate-900", active);
+          link.classList.toggle("text-white", active);
+          link.classList.toggle("dark:bg-teal-500", active);
+          link.classList.toggle("dark:text-slate-900", active);
+          if (!active) {
+            link.classList.remove("bg-slate-900", "text-white", "dark:bg-teal-500", "dark:text-slate-900");
+          }
+        });
+
+        if (title) {
+          sectionTitle.textContent = title;
+        }
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveNav(entry.target.id, entry.target.dataset.sectionTitle);
+            }
+          });
+        },
+        { rootMargin: "-30% 0px -55% 0px", threshold: 0.01 }
+      );
+
+      sections.forEach((section) => observer.observe(section));
+
+      navLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          if (window.innerWidth < 768) {
+            sidebar.classList.add("-translate-x-full");
+          }
+        });
+      });
+
+      renderMetrics();
+      renderUsers();
+      renderAgents();
+      renderSkills();
+      renderContracts();
+      renderErrors();
+      setActiveNav("dashboard", "Dashboard");
+    </script>
+  </body>
+</html>
